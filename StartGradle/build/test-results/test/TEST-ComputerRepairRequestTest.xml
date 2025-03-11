@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ComputerRepairRequestTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-03-04T06:48:16" hostname="Stiubes-MacBook-Pro.local" time="0.01">
+<testsuite name="ComputerRepairRequestTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-03-11T14:22:46" hostname="Stiubes-MacBook-Pro.local" time="0.011">
   <properties/>
   <testcase name="First Test" classname="ComputerRepairRequestTest" time="0.008"/>
   <testcase name="Test Exemplu" classname="ComputerRepairRequestTest" time="0.0"/>
