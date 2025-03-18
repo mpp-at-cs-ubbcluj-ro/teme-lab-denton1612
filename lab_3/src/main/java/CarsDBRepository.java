@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class CarsDBRepository implements CarRepository{
 
-    private JdbcUtils dbUtils;
+    private final JdbcUtils dbUtils;
 
 
 
@@ -93,11 +93,12 @@ public class CarsDBRepository implements CarRepository{
     }
 
     @Override
-    public void update(Integer integer, Car elem) {
+    public void update(Integer id, Car elem) {
         logger.traceEntry("updating task {}", elem);
         Connection conn = dbUtils.getConnection();
-        try (PreparedStatement preparedStatement = conn.prepareStatement("update cars set year = ?")) {
-            preparedStatement.setInt(1, elem.getYear());
+        try (PreparedStatement preparedStatement = conn.prepareStatement("update cars set model = ? where id = ?")) {
+            preparedStatement.setString(1, elem.getModel());
+            preparedStatement.setInt(2, elem.getId());
             int result = preparedStatement.executeUpdate();
             logger.trace("Updated {} instances", result);
         }
@@ -132,5 +133,29 @@ public class CarsDBRepository implements CarRepository{
         }
         logger.traceExit(cars);
         return cars;
+    }
+
+    @Override
+    public Car findById(int id) {
+        logger.traceEntry("Find car by id {}", id);
+        Connection conn = dbUtils.getConnection();
+        Car car = null;
+        try (PreparedStatement preparedStatement = conn.prepareStatement("select * from cars where id = ?")) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String manufacturer = resultSet.getString("manufacturer");
+                    String model = resultSet.getString("model");
+                    int year = resultSet.getInt("year");
+                    car = new Car(manufacturer, model, year);
+                    car.setId(id);
+                }
+            }
+        }
+        catch (SQLException e) {
+            logger.error(e);
+            System.err.println("Error DB: " + e);
+        }
+        return car;
     }
 }
