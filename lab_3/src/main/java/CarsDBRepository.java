@@ -15,8 +15,7 @@ public class CarsDBRepository implements CarRepository{
     private static final Logger logger = LogManager.getLogger(CarsDBRepository.class);
 
     public CarsDBRepository(Properties props) {
-        logger.info("Initializing CarsDBRepository with properties: {} ",props);
-        dbUtils=new JdbcUtils(props);
+lp        dbUtils=new JdbcUtils(props);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class CarsDBRepository implements CarRepository{
         logger.traceEntry("saving task {}", elem);
         Connection conn = dbUtils.getConnection();
         try (PreparedStatement preparedStatement = conn.prepareStatement("insert into cars (manufacturer, model, year) values (?, ?, ?)")) {
-            preparedStatement.setString(1, elem.getManufacturer());
+            preparedStatement.setlString(1, elem.getManufacturer());
             preparedStatement.setString(2, elem.getModel());
             preparedStatement.setInt(3, elem.getYear());
             int result = preparedStatement.executeUpdate();
